@@ -290,10 +290,10 @@ ticks
 30.0
 
 BUTTON
-99
-261
-162
-294
+108
+112
+171
+145
 NIL
 reset
 NIL
@@ -307,10 +307,10 @@ NIL
 1
 
 BUTTON
-78
-157
-189
-190
+84
+225
+195
+258
 Create Turtles
 read-turtles-from-csv
 NIL
@@ -324,10 +324,10 @@ NIL
 1
 
 SWITCH
-89
-103
-192
-136
+88
+170
+191
+203
 links?
 links?
 1
@@ -335,10 +335,10 @@ links?
 -1000
 
 BUTTON
-100
-207
-163
-240
+110
+282
+173
+315
 NIL
 go
 NIL
@@ -411,6 +411,23 @@ PENS
 "pen-13" 1.0 0 -5825686 true "" "plot [ycor] of turtle 21"
 "pen-14" 1.0 0 -2064490 true "" "plot [ycor] of turtle 32"
 "pen-15" 1.0 0 -16777216 true "" "plot [ycor] of turtle 44"
+
+BUTTON
+9
+337
+264
+370
+Track coordinates at each tick in csv file
+track-cordinates-at-each-tick
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 SLIDER
 58
