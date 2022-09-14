@@ -5,7 +5,9 @@ sub-list
 turtles-list
 track-list
 value
-temp_opn]
+temp_opn
+temp_opn_2
+temp_opn_3]
 turtles-own
 [
 id
@@ -196,6 +198,8 @@ end
 
 
 to go
+let tick-count  0
+repeat [
 
 file-close-all ; close all open files
 
@@ -218,6 +222,8 @@ while [ i < nb_agents ] [
   let j 0 ; cloumn number of the adjacency matrix
   let k 0
   let sumop 0
+  let sumop_2 0
+  let sumop_3 0
   repeat nb_agents [ ; repeating hundred times for each row i bcz we have hundred columns
     let trust item j data
 
@@ -225,6 +231,8 @@ while [ i < nb_agents ] [
 
         ask turtle j[
         set temp_opn  opinion_1
+        set temp_opn_2  opinion_2
+        set temp_opn_3  opinion_3
         ]
       ;let sumop 0
       ask turtle i [
@@ -233,15 +241,21 @@ while [ i < nb_agents ] [
 
 
           set sumop sumop + (trust * (opinion_1 - temp_opn))
+          set sumop_2 sumop_2 + (trust * (opinion_2 - temp_opn_2))
+          set sumop_3 sumop_3 + (trust * (opinion_3 - temp_opn_3))
           ;set sumop sumop
 
           if j = nb_agents - 1[
           let opattick word "opinion_at_tick" i
               set opinion_1 opinion_1 + sumop / nb_agents
+            set opinion_2 opinion_2 + sumop_2 / nb_agents
+            set opinion_3 opinion_2 + sumop_3 / nb_agents
               set opattick opinion_1 + sumop / nb_agents
             print id
           ;print sumop
           print opattick
+          print opinion_2
+          print opinion_3
           ]
 
 
@@ -260,6 +274,8 @@ while [ i < nb_agents ] [
 
 ;   print k
 file-close ; make sure to close the file
+    tick
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -290,10 +306,10 @@ ticks
 30.0
 
 BUTTON
-108
-112
-171
-145
+99
+261
+162
+294
 NIL
 reset
 NIL
@@ -307,10 +323,10 @@ NIL
 1
 
 BUTTON
-84
-225
-195
-258
+78
+157
+189
+190
 Create Turtles
 read-turtles-from-csv
 NIL
@@ -324,10 +340,10 @@ NIL
 1
 
 SWITCH
-88
-170
-191
-203
+89
+103
+192
+136
 links?
 links?
 1
@@ -335,10 +351,10 @@ links?
 -1000
 
 BUTTON
-110
-282
-173
-315
+100
+207
+163
+240
 NIL
 go
 NIL
@@ -356,9 +372,9 @@ PLOT
 27
 1137
 200
-xplot
+opinion1plot
 ticks
-xcor
+opinion_1
 0.0
 10.0
 -10.0
@@ -367,26 +383,26 @@ true
 false
 "" ""
 PENS
-"pen-0" 1.0 0 -7500403 true "" "plot [xcor] of turtle 0"
-"pen-1" 1.0 0 -2674135 true "" "plot [xcor] of turtle 3"
-"pen-2" 1.0 0 -955883 true "" "plot [xcor] of turtle 7"
-"pen-3" 1.0 0 -6459832 true "" "plot [xcor] of turtle 9"
-"pen-4" 1.0 0 -1184463 true "" "plot [xcor] of turtle 90"
-"pen-5" 1.0 0 -10899396 true "" "plot [xcor] of turtle 85"
-"pen-6" 1.0 0 -13840069 true "" "plot [xcor] of turtle 76"
-"pen-7" 1.0 0 -14835848 true "" "plot [xcor] of turtle 45"
-"pen-8" 1.0 0 -11221820 true "" "plot [xcor] of turtle 66"
-"pen-9" 1.0 0 -13791810 true "" "plot [xcor] of turtle 77"
-"pen-10" 1.0 0 -13345367 true "" "plot [xcor] of turtle 88"
+"pen-0" 1.0 0 -7500403 true "" "plot [opinion_1] of turtle 0"
+"pen-1" 1.0 0 -2674135 true "" "plot [opinion_1] of turtle 1"
+"pen-2" 1.0 0 -955883 true "" "plot [opinion_1] of turtle 2"
+"pen-3" 1.0 0 -6459832 true "" "plot [opinion_1] of turtle 3"
+"pen-4" 1.0 0 -1184463 true "" "plot [opinion_1] of turtle 4"
+"pen-5" 1.0 0 -10899396 true "" "plot [opinion_1] of turtle 5"
+"pen-6" 1.0 0 -13840069 true "" "plot [opinion_1] of turtle 6"
+"pen-7" 1.0 0 -14835848 true "" "plot [opinion_1] of turtle 7"
+"pen-8" 1.0 0 -11221820 true "" "plot [opinion_1] of turtle 8"
+"pen-9" 1.0 0 -13791810 true "" "plot [opinion_1] of turtle 9"
+"pen-10" 1.0 0 -13345367 true "" "plot [opinion_1] of turtle 10"
 
 PLOT
-738
-261
-1137
-435
-yplot
+737
+233
+1136
+407
+OPinion2Plot
 ticks
-ycor
+Opinion_2
 0.0
 10.0
 -10.0
@@ -395,39 +411,16 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -7858858 true "" "plot [ycor] of turtle 95"
-"pen-1" 1.0 0 -7500403 true "" "plot [ycor] of turtle 1"
-"pen-2" 1.0 0 -2674135 true "" "plot [ycor] of turtle 2"
-"pen-3" 1.0 0 -955883 true "" "plot [ycor] of turtle 3"
-"pen-4" 1.0 0 -6459832 true "" "plot [ycor] of turtle 4"
-"pen-5" 1.0 0 -1184463 true "" "plot [ycor] of turtle 5"
-"pen-6" 1.0 0 -10899396 true "" "plot [ycor] of turtle 50"
-"pen-7" 1.0 0 -13840069 true "" "plot [ycor] of turtle 77"
-"pen-8" 1.0 0 -14835848 true "" "plot [ycor] of turtle 88"
-"pen-9" 1.0 0 -11221820 true "" "plot [ycor] of turtle 65"
-"pen-10" 1.0 0 -13791810 true "" "plot [ycor] of turtle 67"
-"pen-11" 1.0 0 -13345367 true "" "plot [ycor] of turtle 80"
-"pen-12" 1.0 0 -8630108 true "" "plot [ycor] of turtle 81"
-"pen-13" 1.0 0 -5825686 true "" "plot [ycor] of turtle 21"
-"pen-14" 1.0 0 -2064490 true "" "plot [ycor] of turtle 32"
-"pen-15" 1.0 0 -16777216 true "" "plot [ycor] of turtle 44"
-
-BUTTON
-9
-337
-264
-370
-Track coordinates at each tick in csv file
-track-cordinates-at-each-tick
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
+"default" 1.0 0 -7858858 true "" "plot [Opinion_2] of turtle 0"
+"pen-1" 1.0 0 -7500403 true "" "plot [Opinion_2] of turtle 1"
+"pen-2" 1.0 0 -2674135 true "" "plot [Opinion_2] of turtle 2"
+"pen-3" 1.0 0 -955883 true "" "plot [Opinion_2] of turtle 3"
+"pen-4" 1.0 0 -6459832 true "" "plot [Opinion_2] of turtle 4"
+"pen-5" 1.0 0 -1184463 true "" "plot [Opinion_2] of turtle 5"
+"pen-6" 1.0 0 -10899396 true "" "plot [Opinion_2] of turtle 6"
+"pen-7" 1.0 0 -13840069 true "" "plot [Opinion_2] of turtle 7"
+"pen-8" 1.0 0 -14835848 true "" "plot [Opinion_2] of turtle 8"
+"pen-9" 1.0 0 -11221820 true "" "plot [Opinion_2] of turtle 9"
 
 SLIDER
 58
@@ -438,11 +431,38 @@ nb_agents
 nb_agents
 0
 100
-100.0
+10.0
 1
 1
 NIL
 HORIZONTAL
+
+PLOT
+738
+438
+1138
+604
+Opinion3plot
+ticks
+Opinion_3
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot [Opinion_3] of turtle 0"
+"pen-1" 1.0 0 -7500403 true "" "plot [Opinion_3] of turtle 1"
+"pen-2" 1.0 0 -2674135 true "" "plot [Opinion_3] of turtle 2"
+"pen-3" 1.0 0 -955883 true "" "plot [Opinion_3] of turtle 3"
+"pen-4" 1.0 0 -6459832 true "" "plot [Opinion_3] of turtle 4"
+"pen-5" 1.0 0 -1184463 true "" "plot [Opinion_3] of turtle 5"
+"pen-6" 1.0 0 -10899396 true "" "plot [Opinion_3] of turtle 6"
+"pen-7" 1.0 0 -13840069 true "" "plot [Opinion_3] of turtle 7"
+"pen-8" 1.0 0 -14835848 true "" "plot [Opinion_3] of turtle 8"
+"pen-9" 1.0 0 -11221820 true "" "plot [Opinion_3] of turtle 9"
 
 @#$#@#$#@
 ## WHAT IS IT?
