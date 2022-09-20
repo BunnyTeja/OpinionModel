@@ -7,7 +7,11 @@ track-list
 value
 temp_opn
 temp_opn_2
-temp_opn_3]
+temp_opn_3
+topic_1_dependency
+topic_2_dependency
+topic_3_dependency
+trust]
 turtles-own
 [
 id
@@ -69,7 +73,7 @@ end
 to write-turtles-to-csv
 set turtles-list []
     let i 0
- repeat 100 [
+ repeat 1 [
 
   ask turtle i[
     set sub-list [ (list color size id xcor ycor shape) ] of turtle i
@@ -190,8 +194,8 @@ while [ i < nb_agents ] [
   ]
     set i i + 1
 ]
- if links?
-  [make-network-using-adj-matrix]
+ ;if links?
+  ;[make-network-using-adj-matrix]
 
 file-close ; make sure to close the file
 end
@@ -199,7 +203,7 @@ end
 
 to go
 let tick-count  0
-repeat 10[
+repeat 3[
 
 file-close-all ; close all open files
 
@@ -208,7 +212,14 @@ if not file-exists? "adjacency_matrix.csv" [
   stop
 ]
 
-file-open "adjacency_matrix.csv" ; open the file with the links data
+file-open "topic_dependency_adjacency_matrix.csv" ; open the file with the links data
+
+;if not file-exists? "topic_dependency_adjacency_matrix.csv" [
+;  user-message "No file 'topic_dependency_adjacency_matrix.csv' exists."
+;  stop
+;]
+;
+;file-open "adjacency_matrix.csv" ; open the file with the links data
 
 ; We'll read all the data in a single loop
 let i 0 ; initializing the row number of the adjacency matrix
@@ -218,6 +229,12 @@ while [ i < nb_agents ] [
     ;ask turtle i [set in-trust []]
   ; here the CSV extension grabs a single line and puts the read data in a list
   let data csv:from-row file-read-line
+  set topic_1_dependency item 0 data
+        set topic_2_dependency item 1 data
+        set topic_3_dependency item 2 data
+;        print topic_1_dependency
+;        print topic_2_dependency
+;        print topic_3_dependency
   ; now we can use that list to create a turtle with the saved properties
   let j 0 ; cloumn number of the adjacency matrix
   let k 0
@@ -225,7 +242,42 @@ while [ i < nb_agents ] [
   let sumop_2 0
   let sumop_3 0
   repeat nb_agents [ ; repeating hundred times for each row i bcz we have hundred columns
-    let trust item j data
+
+
+
+
+
+
+        (ifelse
+
+          i = 0 and j = 1
+        [set trust Trust-0-1]
+
+          i = 0 and j = 2
+        [set trust Trust-0-2]
+
+        i = 1 and j = 0
+        [set trust Trust-1-0]
+
+        i = 1 and j = 2
+        [set trust Trust-1-2]
+
+        i = 2 and j = 0
+        [set trust Trust-2-0]
+
+        i = 2 and j = 1
+        [set trust Trust-2-1]
+
+
+; elsecommands
+[
+
+       set trust 0
+
+])
+
+
+   ; print trust
 
    ; if trust = 1[
 
@@ -240,9 +292,9 @@ while [ i < nb_agents ] [
           ;let opinion_tick_1  word "Opinion_at_tick"i
 
 
-          set sumop sumop + (trust * (opinion_1 - temp_opn))
-          set sumop_2 sumop_2 + (trust * (opinion_2 - temp_opn_2))
-          set sumop_3 sumop_3 + (trust * (opinion_3 - temp_opn_3))
+          set sumop sumop + (trust * (opinion_1 - temp_opn)) + (topic_1_dependency * (opinion_1 - temp_opn))
+          set sumop_2 sumop_2 + (trust * (opinion_2 - temp_opn_2)) + (topic_2_dependency * (opinion_2 - temp_opn_2))
+          set sumop_3 sumop_3 + (trust * (opinion_3 - temp_opn_3)) + (topic_3_dependency * (opinion_3 - temp_opn_3))
           ;set sumop sumop
 
           if j = nb_agents - 1[
@@ -252,10 +304,10 @@ while [ i < nb_agents ] [
             set opinion_3 opinion_2 + sumop_3 / nb_agents
               set opattick opinion_1 + sumop / nb_agents
             print id
-          ;print sumop
-          print opattick
-          print opinion_2
-          print opinion_3
+         ; print sumop
+          print  opattick
+          print  opinion_2
+          print  opinion_3
           ]
 
 
@@ -306,10 +358,10 @@ ticks
 30.0
 
 BUTTON
-99
+102
+228
+165
 261
-162
-294
 NIL
 reset
 NIL
@@ -323,10 +375,10 @@ NIL
 1
 
 BUTTON
-78
-157
-189
-190
+77
+133
+188
+166
 Create Turtles
 read-turtles-from-csv
 NIL
@@ -339,22 +391,11 @@ NIL
 NIL
 1
 
-SWITCH
-89
-103
-192
-136
-links?
-links?
-1
-1
--1000
-
 BUTTON
-100
-207
-163
-240
+102
+178
+165
+211
 NIL
 go
 NIL
@@ -423,15 +464,15 @@ PENS
 "pen-9" 1.0 0 -11221820 true "" "plot [Opinion_2] of turtle 9"
 
 SLIDER
-58
-41
-230
-74
+81
+10
+173
+43
 nb_agents
 nb_agents
 0
-100
-10.0
+3
+3.0
 1
 1
 NIL
@@ -463,6 +504,116 @@ PENS
 "pen-7" 1.0 0 -13840069 true "" "plot [Opinion_3] of turtle 7"
 "pen-8" 1.0 0 -14835848 true "" "plot [Opinion_3] of turtle 8"
 "pen-9" 1.0 0 -11221820 true "" "plot [Opinion_3] of turtle 9"
+
+PLOT
+740
+629
+1136
+779
+eff
+ticks
+nb_agents
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot [opinion_1] of turtle 1"
+"pen-1" 1.0 0 -7500403 true "" "plot [opinion_2] of turtle 1"
+"pen-2" 1.0 0 -2674135 true "" "plot [opinion_3] of turtle 1"
+
+SLIDER
+0
+49
+92
+82
+Trust-0-1
+Trust-0-1
+0
+10
+2.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+94
+50
+186
+83
+Trust-0-2
+Trust-0-2
+0
+10
+0.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+186
+50
+278
+83
+trust-1-0
+trust-1-0
+0
+10
+2.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+0
+91
+92
+124
+Trust-1-2
+Trust-1-2
+0
+10
+2.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+92
+91
+184
+124
+Trust-2-0
+Trust-2-0
+0
+10
+1.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+184
+92
+276
+125
+Trust-2-1
+Trust-2-1
+0
+10
+3.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
