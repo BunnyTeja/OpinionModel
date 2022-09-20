@@ -8,9 +8,17 @@ value
 temp_opn
 temp_opn_2
 temp_opn_3
-topic_1_dependency
-topic_2_dependency
-topic_3_dependency
+topic_1_1_dependency
+topic_1_2_dependency
+topic_1_3_dependency
+topic_2_1_dependency
+topic_2_2_dependency
+topic_2_3_dependency
+topic_3_1_dependency
+topic_3_2_dependency
+topic_3_3_dependency
+
+
 trust]
 turtles-own
 [
@@ -229,9 +237,24 @@ while [ i < nb_agents ] [
     ;ask turtle i [set in-trust []]
   ; here the CSV extension grabs a single line and puts the read data in a list
   let data csv:from-row file-read-line
-  set topic_1_dependency item 0 data
-        set topic_2_dependency item 1 data
-        set topic_3_dependency item 2 data
+set topic_1_1_dependency item 0 data
+      set topic_1_2_dependency item 1 data
+      set topic_1_3_dependency item 2 data
+    set topic_2_1_dependency item 3 data
+      set topic_2_2_dependency item 4 data
+      set topic_2_3_dependency item 5 data
+    set topic_3_1_dependency item 6 data
+      set topic_3_2_dependency item 7 data
+      set topic_3_3_dependency item 8 data
+      print topic_1_1_dependency
+;print topic_1_2_dependency
+;print topic_1_3_dependency
+;print topic_2_1_dependency
+;print topic_2_2_dependency
+;print topic_2_3_dependency
+;print topic_3_1_dependency
+;print topic_3_2_dependency
+;print topic_3_3_dependency
 ;        print topic_1_dependency
 ;        print topic_2_dependency
 ;        print topic_3_dependency
@@ -292,9 +315,15 @@ while [ i < nb_agents ] [
           ;let opinion_tick_1  word "Opinion_at_tick"i
 
 
-          set sumop sumop + (trust * (opinion_1 - temp_opn)) + (topic_1_dependency * (opinion_1 - temp_opn))
-          set sumop_2 sumop_2 + (trust * (opinion_2 - temp_opn_2)) + (topic_2_dependency * (opinion_2 - temp_opn_2))
-          set sumop_3 sumop_3 + (trust * (opinion_3 - temp_opn_3)) + (topic_3_dependency * (opinion_3 - temp_opn_3))
+          set sumop sumop + (trust * (opinion_1 - temp_opn)) + (topic_1_1_dependency * (opinion_1 - temp_opn)) + (topic_1_2_dependency * (opinion_1 - temp_opn_2))
+          + (topic_1_3_dependency * (opinion_1 - temp_opn_3))
+
+          set sumop_2 sumop_2 + (trust * (opinion_2 - temp_opn_2)) + (topic_2_1_dependency * (opinion_2 - temp_opn_2))
+          + (topic_2_2_dependency * (opinion_2 - temp_opn_2)) + (topic_2_3_dependency * (opinion_2 - temp_opn_3))
+
+          set sumop_3 sumop_3 + (trust * (opinion_3 - temp_opn_3)) + (topic_3_1_dependency * (opinion_3 - temp_opn))
+          + (topic_3_2_dependency * (opinion_3 - temp_opn_2)) + (topic_3_3_dependency * (opinion_3 - temp_opn_3))
+
           ;set sumop sumop
 
           if j = nb_agents - 1[
