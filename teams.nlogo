@@ -246,7 +246,7 @@ set topic_1_1_dependency item 0 data
     set topic_3_1_dependency item 6 data
       set topic_3_2_dependency item 7 data
       set topic_3_3_dependency item 8 data
-      print topic_1_1_dependency
+      ;print topic_1_1_dependency
 ;print topic_1_2_dependency
 ;print topic_1_3_dependency
 ;print topic_2_1_dependency
@@ -315,14 +315,14 @@ set topic_1_1_dependency item 0 data
           ;let opinion_tick_1  word "Opinion_at_tick"i
 
 
-          set sumop sumop + (trust * (opinion_1 - temp_opn)) + (topic_1_1_dependency * (opinion_1 - temp_opn)) + (topic_1_2_dependency * (opinion_1 - temp_opn_2))
-          + (topic_1_3_dependency * (opinion_1 - temp_opn_3))
+          set sumop sumop + (trust * (opinion_1 - temp_opn)) + (topic_1_1_dependency * (opinion_1 - temp_opn)) + (topic_1_2_dependency * (opinion_2 - temp_opn_2))
+          + (topic_1_3_dependency * (opinion_3 - temp_opn_3))
 
-          set sumop_2 sumop_2 + (trust * (opinion_2 - temp_opn_2)) + (topic_2_1_dependency * (opinion_2 - temp_opn_2))
-          + (topic_2_2_dependency * (opinion_2 - temp_opn_2)) + (topic_2_3_dependency * (opinion_2 - temp_opn_3))
+          set sumop_2 sumop_2 + (trust * (opinion_2 - temp_opn_2)) + (topic_2_1_dependency * (opinion_1 - temp_opn))
+          + (topic_2_2_dependency * (opinion_2 - temp_opn_2)) + (topic_2_3_dependency * (opinion_3 - temp_opn_3))
 
-          set sumop_3 sumop_3 + (trust * (opinion_3 - temp_opn_3)) + (topic_3_1_dependency * (opinion_3 - temp_opn))
-          + (topic_3_2_dependency * (opinion_3 - temp_opn_2)) + (topic_3_3_dependency * (opinion_3 - temp_opn_3))
+          set sumop_3 sumop_3 + (trust * (opinion_3 - temp_opn_3)) + (topic_3_1_dependency * (opinion_1 - temp_opn))
+          + (topic_3_2_dependency * (opinion_2 - temp_opn_2)) + (topic_3_3_dependency * (opinion_3 - temp_opn_3))
 
           ;set sumop sumop
 
@@ -360,13 +360,13 @@ file-close ; make sure to close the file
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
-274
-17
-713
-457
+389
+49
+681
+342
 -1
 -1
-13.061
+8.61
 1
 10
 1
@@ -561,10 +561,10 @@ SLIDER
 82
 Trust-0-1
 Trust-0-1
-0
-10
-2.0
+-1
 1
+0.6
+0.1
 1
 NIL
 HORIZONTAL
@@ -576,25 +576,25 @@ SLIDER
 83
 Trust-0-2
 Trust-0-2
-0
-10
+-1
+1
 0.0
-1
+0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-186
-50
-278
-83
+197
+49
+289
+82
 trust-1-0
 trust-1-0
-0
-10
-2.0
+-1
 1
+0.2
+0.1
 1
 NIL
 HORIZONTAL
@@ -606,10 +606,10 @@ SLIDER
 124
 Trust-1-2
 Trust-1-2
-0
-10
-2.0
+-1
 1
+-1.0
+0.1
 1
 NIL
 HORIZONTAL
@@ -621,25 +621,25 @@ SLIDER
 124
 Trust-2-0
 Trust-2-0
-0
-10
+-1
+1
 1.0
-1
+0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-184
-92
-276
-125
+195
+91
+287
+124
 Trust-2-1
 Trust-2-1
-0
-10
-3.0
+-1
 1
+1.0
+0.1
 1
 NIL
 HORIZONTAL
